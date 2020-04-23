@@ -1,0 +1,471 @@
+swagger: "2.0"
+info:
+  description: "API para el recurso estudiante"
+  version: "2.0.0"
+  title: "Estudiante"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "juan.huerta@uabc.edu.mx"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "localhost"
+basePath: "/estudiantes"
+tags:
+- name: "Estudiantes"
+  description: "Operaciones para los estudiantes"
+  externalDocs:
+    description: "Find out more"
+    url: "http://swagger.io"
+- name: "Cursos"
+  description: "Operaciones para los cursos"
+- name: "Inscripciones"
+  description: "Operaciones para las inscripciones"
+schemes:
+- "https"
+- "http"
+paths:
+  /estudiantes:
+    get:
+      tags:
+      - "Estudiantes"
+      summary: "Obtiene una lista de todos los estudiantes"
+      description: ""
+     
+      
+      produces:
+      - "application/json"
+      
+      responses:
+        200:
+          description: "Lista de estudiantes"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Estudiantes"
+        404:
+          description: "No se encontraron los estudiantes "
+    post:
+      tags:
+      - "Estudiantes"
+      summary: "Crea un nuevo estudiante"
+      description: ""
+      produces:
+      - "application/json"
+      parameters:
+      - name: "matricula"
+        in: "query"
+        description: "matricula para el estudiante nuevo"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "apellidoPaterno"
+        in: "query"
+        description: "Apellido paterno para el estudiante nuevo"
+        required: true
+        type: "string"
+      - name: "apellidoMaterno"
+        in: "query"
+        description: "Apellidco materno para el estudiante nuevo"
+        required: true
+        type: "string"
+      - name: "nombre"
+        in: "query"
+        description: "Nombre para el estudiante nuevo"
+        required: true
+        type: "string"
+      - name: "semestreIngreso"
+        in: "query"
+        description: "El semestre de ingreso"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "creditos_cursados"
+        in: "query"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "Se creo el estudiante"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Estudiantes"
+        405:
+          description: "Dato invalido" 
+  
+  /estudiantes/matricula:
+    get:
+      tags:
+      - "Estudiantes"
+      summary: "Encuentra el estudiante por matricula(id)"
+      description: ""
+    
+      produces:
+      - "application/json"
+      parameters:
+      - name: "matricula"
+        in: "query"
+        description: "ID del estudiante"
+        required: true
+        type: "integer"
+      responses:
+        200:
+          description: "Se encontro el estudiante"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Estudiantes"
+        400:
+          description: "Dato invalido"
+        404:
+          description: "No se encontro al estudiante"
+    delete:
+      tags:
+      - "Estudiantes"
+      summary: "Borra a un estudiante por matricula(id)"
+      description: ""
+      produces:
+      - "application/json"
+      parameters:
+      - name: "matricula"
+        in: "query"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "Se borro el estudiante"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Estudiantes"
+        400:
+          description: "Dato invalido"
+        404:
+          description: "No se encontro al estudiante"
+    put:
+      tags:
+      - "Estudiantes"
+      summary: "Actualiza datos de un estudiante por matricula(id)"
+      description: ""
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "matricula"
+        in: "query"
+        description: "id para actualizar el estudiante"
+        required: true
+        type: "integer"
+        format: "int64"
+        
+      responses:
+        200:
+          description: "Se actualizo el estudiante"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Estudiantes"
+        400:
+          description: "Dato invalido"
+        404:
+          description: "No se encontro el estudiante"
+        405:
+          description: "Error de validacion" 
+  /cursos:
+    get:
+      tags:
+      - "Cursos"
+      summary: "Obtiene una lista de todos los cursos"
+      description: ""
+     
+      
+      produces:
+      - "application/json"
+      
+      responses:
+        200:
+          description: "Lista de Cursos"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Cursos"
+        404:
+          description: "No se encontraron los curos "
+    post:
+      tags:
+      - "Cursos"
+      summary: "Crea un nuevo curso"
+      description: ""
+      produces:
+      - "application/json"
+      parameters:
+      - name: "clave"
+        in: "query"
+        description: "Clave para el curso nuevo"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "nombre"
+        in: "query"
+        description: "Nombre para el curso nuevo"
+        required: true
+        type: "string"
+      - name: "creditos"
+        in: "query"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "Se creo el Curso"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Cursos"
+        405:
+          description: "Dato invalido" 
+  /cursos/id:
+    get:
+      tags:
+      - "Cursos"
+      summary: "Encuentra el curso por clave"
+      description: ""
+    
+      produces:
+      - "application/json"
+      parameters:
+      - name: "clave"
+        in: "query"
+        description: "Clave del curso"
+        required: true
+        type: "integer"
+      responses:
+        200:
+          description: "Se encontro el curso"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Cursos"
+        400:
+          description: "Dato invalido"
+        404:
+          description: "No se encontro el curso"
+    delete:
+      tags:
+      - "Cursos"
+      summary: "Borra a un curso por clave"
+      description: ""
+      produces:
+      - "application/json"
+      parameters:
+      - name: "clave"
+        in: "query"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "Se borro el curso"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Cursos"
+        400:
+          description: "Dato invalido"
+        404:
+          description: "No se encontro el curso"
+    put:
+      tags:
+      - "Cursos"
+      summary: "Actualiza datos de un curso por clave"
+      description: ""
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "clave"
+        in: "query"
+        description: "clave para actualizar el curso"
+        required: true
+        type: "integer"
+        format: "int64"
+        
+      responses:
+        200:
+          description: "Se actualizo el curso"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Cursos"
+        400:
+          description: "Dato invalido"
+        404:
+          description: "No se encontro el curso"
+        405:
+          description: "Error de validacion" 
+  /inscripciones:
+    get:
+      tags:
+      - "Inscripciones"
+      summary: "Obtiene una lista de todos los estudiantes con sus respectivos cursos en los que se han inscrito"
+      description: ""
+     
+      
+      produces:
+      - "application/json"
+      
+      responses:
+        200:
+          description: "Lista de inscripciones"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Inscripciones"
+        404:
+          description: "No se encontraron las inscripciones "
+    post:
+      tags:
+      - "Inscripciones"
+      summary: "Crea una inscripcion con alumno y curso"
+      description: ""
+      produces:
+      - "application/json"
+      parameters:
+      - name: "estudiandeid"
+        in: "query"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "cursoid"
+        in: "query"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "Se creo la inscripcion"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Inscripciones"
+        405:
+          description: "Dato invalido" 
+  /inscripciones/id:
+    get:
+      tags:
+      - "Inscripciones"
+      summary: "Encuentra el alumno y sus cursos por la id del alumno"
+      description: ""
+    
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "query"
+        description: "id del alumno"
+        required: true
+        type: "integer"
+      responses:
+        200:
+          description: "Se encontro el alumno"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Inscripciones"
+        400:
+          description: "Dato invalido"
+        404:
+          description: "No se encontro el alumno"
+    delete:
+      tags:
+      - "Inscripciones"
+      summary: "Borra a una inscripcion por id de la inscripcion"
+      description: ""
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "query"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "Se borro la inscripcion"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Inscripciones"
+        400:
+          description: "Dato invalido"
+        404:
+          description: "No se encontro la inscripcion"
+    
+definitions:
+  Estudiantes:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      matricula:
+        type: "integer"
+        format: "int64"
+      apellidoPaterno:
+        type: "string"
+      apellidoMaterno:
+        type: "string"
+      nombre:
+        type: "string"
+      semestreIngreso:
+        type: "string"
+      creditosCursados:
+        type: "integer"
+        format: "int64"
+  Cursos:    
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      clave:
+        type: "integer"
+        format: "int64"
+      nombre:
+        type: "string"
+      creditos:
+        type: "integer"
+        format: "int64"
+  Inscripciones:    
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      matricula:
+        type: "integer"
+        format: "int64"
+      apellidoPaterno:
+        type: "string"
+      apellidoMaterno:
+        type: "string"
+      nombre:
+        type: "string"
+      semestreIngreso:
+        type: "string"
+      creditosCursados:
+        type: "integer"
+        format: "int64"
+      cursos:
+        type: "array"
+        items: 
+          type: "string"
+         
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"
